@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# File   : replicate.py
-# Author : Jiayuan Mao
-# Email  : maojiayuan@gmail.com
-# Date   : 27/01/2018
+# File   : __init__.py
+# Author : Muhammad Abiodun Sulaiman
+# Email  : prince.behordeun@gmail.com
+# Date   : 13/09/2020
 # 
 # This file is part of Synchronized-BatchNorm-PyTorch.
 # https://github.com/vacancy/Synchronized-BatchNorm-PyTorch
@@ -34,11 +34,11 @@ def execute_replication_callbacks(modules):
     (shared among multiple copies of this module on different devices).
     Through this context, different copies can share some information.
 
-    We guarantee that the callback on the master copy (the first copy) will be called ahead of calling the callback
+    We guarantee that the callback on the main copy (the first copy) will be called ahead of calling the callback
     of any slave copies.
     """
-    master_copy = modules[0]
-    nr_modules = len(list(master_copy.modules()))
+    main_copy = modules[0]
+    nr_modules = len(list(main_copy.modules()))
     ctxs = [CallbackContext() for _ in range(nr_modules)]
 
     for i, module in enumerate(modules):

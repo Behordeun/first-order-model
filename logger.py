@@ -38,12 +38,13 @@ class Logger:
 
     def visualize_rec(self, inp, out):
         image = self.visualizer.visualize(inp['driving'], inp['source'], out)
-        imageio.imsave(os.path.join(self.visualizations_dir, "%s-rec.png" % str(self.epoch).zfill(self.zfill_num)), image)
+        imageio.imsave(os.path.join(self.visualizations_dir, "%s-rec.png" % str(self.epoch).zfill(self.zfill_num)),
+                       image)
 
     def save_cpk(self, emergent=False):
         cpk = {k: v.state_dict() for k, v in self.models.items()}
         cpk['epoch'] = self.epoch
-        cpk_path = os.path.join(self.cpk_dir, '%s-checkpoint.pth.tar' % str(self.epoch).zfill(self.zfill_num)) 
+        cpk_path = os.path.join(self.cpk_dir, '%s-checkpoint.pth.tar' % str(self.epoch).zfill(self.zfill_num))
         if not (os.path.exists(cpk_path) and emergent):
             torch.save(cpk, cpk_path)
 
@@ -57,16 +58,16 @@ class Logger:
             kp_detector.load_state_dict(checkpoint['kp_detector'])
         if discriminator is not None:
             try:
-               discriminator.load_state_dict(checkpoint['discriminator'])
+                discriminator.load_state_dict(checkpoint['discriminator'])
             except:
-               print ('No discriminator in the state-dict. Dicriminator will be randomly initialized')
+                print('No discriminator in the state-dict. Dicriminator will be randomly initialized')
         if optimizer_generator is not None:
             optimizer_generator.load_state_dict(checkpoint['optimizer_generator'])
         if optimizer_discriminator is not None:
             try:
                 optimizer_discriminator.load_state_dict(checkpoint['optimizer_discriminator'])
             except RuntimeError as e:
-                print ('No discriminator optimizer in the state-dict. Optimizer will be not initialized')
+                print('No discriminator optimizer in the state-dict. Optimizer will be not initialized')
         if optimizer_kp_detector is not None:
             optimizer_kp_detector.load_state_dict(checkpoint['optimizer_kp_detector'])
 
@@ -167,8 +168,7 @@ class Visualizer:
             images.append((prediction, kp_norm))
         images.append(prediction)
 
-
-        ## Occlusion map
+        # Occlusion map
         if 'occlusion_map' in out:
             occlusion_map = out['occlusion_map'].data.cpu().repeat(1, 3, 1, 1)
             occlusion_map = F.interpolate(occlusion_map, size=source.shape[1:3]).numpy()
@@ -181,7 +181,7 @@ class Visualizer:
             for i in range(out['sparse_deformed'].shape[1]):
                 image = out['sparse_deformed'][:, i].data.cpu()
                 image = F.interpolate(image, size=source.shape[1:3])
-                mask = out['mask'][:, i:(i+1)].data.cpu().repeat(1, 3, 1, 1)
+                mask = out['mask'][:, i:(i + 1)].data.cpu().repeat(1, 3, 1, 1)
                 mask = F.interpolate(mask, size=source.shape[1:3])
                 image = np.transpose(image.numpy(), (0, 2, 3, 1))
                 mask = np.transpose(mask.numpy(), (0, 2, 3, 1))

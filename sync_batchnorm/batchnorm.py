@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# File   : batchnorm.py
-# Author : Jiayuan Mao
-# Email  : maojiayuan@gmail.com
-# Date   : 27/01/2018
+# File   : __init__.py
+# Author : Muhammad Abiodun Sulaiman
+# Email  : prince.behordeun@gmail.com
+# Date   : 13/09/2020
 # 
 # This file is part of Synchronized-BatchNorm-PyTorch.
 # https://github.com/vacancy/Synchronized-BatchNorm-PyTorch
